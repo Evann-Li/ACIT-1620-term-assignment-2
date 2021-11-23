@@ -47,3 +47,11 @@ function renderIndex(contacts){
         createSingleIndex(contact.name)
     }
 }
+
+function cleanUpView() {
+    let nodes = document.querySelectorAll(".contactinfo")
+    //remove all unique elements with class "contactinfo"
+    for (let i = 0; i < nodes.length; i++) {
+        nodes[i].remove()
+    }
+}
