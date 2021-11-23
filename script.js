@@ -97,3 +97,11 @@ function renderView(contacts){
     //append the final version of the child to the parent
     parent.appendChild(child);
 }
+
+function cleanUpCreate() {
+    let nodes = document.querySelectorAll(".contactedit");
+    //remove all unique elements with class "contactedit"
+    for (let i = 0; i < nodes.length; i++) {
+        nodes[i].remove()
+    }
+}
