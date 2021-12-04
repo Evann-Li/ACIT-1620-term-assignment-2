@@ -45,23 +45,10 @@ function createSingleIndex (object) {
 }
 
 function renderIndex (contactArray) {
-  // let main = document.querySelectorAll(".main")
+  
 
   for (let i = 0; i < contactArray.length; i++) {
-      // let newContactDiv = document.createElement("div");
-      // let newContactDivP = document.createElement("p");
-      // let newContactA = document.createElement("a");
-
-      // newContactDivP.append(contactArray[i].name);
-      // newContactDiv.appendChild(newContactDivP);
-      // newContactDiv.classList.add("contact");
-
-      // newContactA.appendChild(newContactDiv);
-      // newContactA.href = "page3.html";
       
-
-      // // main[0].appendChild(newContactA);
-      // main.appendChild(newContactA)
 
       createSingleIndex(contactArray[i])
   }
