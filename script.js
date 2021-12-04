@@ -1,217 +1,330 @@
-function cleanUpIndex() {
-    let nodes = document.querySelectorAll(".contact")
-    //remove all unique elements with class "contact"
-    for (let i = 0; i < nodes.length; i++) {
-        nodes[i].remove()
-    }
-}
-
-function createSingleIndex(name) {
-    let parent = document.querySelector(".main"); // get parent
-    // create child node
-    let child = document.createElement("a");
-    child.href = "page3.html";
-    let contactDiv = document.createElement("div");
-    contactDiv.className = "contact";
-    let childName = document.createElement("p");
-    childName.textContent = name;
-    child.appendChild(contactDiv);
-    contactDiv.appendChild(childName);
-
-    // add child to parent
-    parent.appendChild(child);
-
-}
-
 let contactList = [
-    {
-      name: "Roberta Dobbs",
-      phone: "778-555-1234",
-      address: "101 Main St, Anytown, USA",
-      email: "subgenius@slack.example.com",
-    }, 
-    {
-      name: "Bugs Bunny",
-      phone: "123-867-5309",
-      address: "Warner Brothers Animation Lot",
-      email: "whatsup@doc.example.com",
-    },
-  ]
+  {
+    name: "Roberta Dobbs",
+    phone: "778-555-1234",
+    address: "101 Main St, Anytown, USA",
+    email: "subgenius@slack.example.com",
+  },
+  {
+    name: "Bugs Bunny",
+    phone: "123-867-5309",
+    address: "Warner Brothers Animation Lot",
+    email: "whatsup@doc.example.com",
+  },
+]
 
-// contacts - list of contacts to display
-function renderIndex(contacts){
-    let parent = document.querySelector(".main")
+function cleanUpIndex() {
+  let nodes = document.querySelectorAll(".contact")
 
-    for (let i = 0; i < contacts.length; i++) {
-        let contact = contacts[i]
-        createSingleIndex(contact.name)
-    }
+  for (let i = 0; i < nodes.length; i++) {
+      nodes[i].remove()
+  }
+}
+
+function createSingleIndex (object) {
+  let main = document.querySelectorAll(".main");
+
+  let newContactA = document.createElement("a");
+  let newContactDiv = document.createElement("div");
+  let newContactDivP = document.createElement("p");
+
+  newContactDivP.append(object.name);
+  newContactDiv.append(newContactDivP);
+  newContactA.append(newContactDiv);
+
+  newContactDiv.classList.add("contact")
+  newContactA.href = "page3.html";
+
+  main[0].appendChild(newContactA);
+
+  newContactA.addEventListener("click", event => {
+      event.preventDefault();
+      cleanUpIndex();
+      renderView(object);
+  })
+}
+
+function renderIndex (contactArray) {
+  // let main = document.querySelectorAll(".main")
+
+  for (let i = 0; i < contactArray.length; i++) {
+      // let newContactDiv = document.createElement("div");
+      // let newContactDivP = document.createElement("p");
+      // let newContactA = document.createElement("a");
+
+      // newContactDivP.append(contactArray[i].name);
+      // newContactDiv.appendChild(newContactDivP);
+      // newContactDiv.classList.add("contact");
+
+      // newContactA.appendChild(newContactDiv);
+      // newContactA.href = "page3.html";
+      
+
+      // // main[0].appendChild(newContactA);
+      // main.appendChild(newContactA)
+
+      createSingleIndex(contactArray[i])
+  }
 }
 
 function cleanUpView() {
-    let nodes = document.querySelectorAll(".contactinfo")
-    //remove all unique elements with class "contactinfo"
-    for (let i = 0; i < nodes.length; i++) {
-        nodes[i].remove()
-    }
+  let nodes = document.querySelectorAll(".contactinfo")
+
+  nodes[0].remove()
 }
 
-function renderView(contacts){
-    let parent = document.querySelector(".main")
-    let child = document.createElement("div");
-    child.className = "contactinfo";
-    let childName = document.createElement("div");
-    childName.className = "contactname";
-    childName.textContent = contacts.name;
-    let pic = document.createElement("img");
-    pic.className = "profilepic";
-    pic.src="./img/profile.jpg";
-    pic.alt = "Profile Picture";
-    let childEmail = document.createElement("div");
-    childEmail.className = "contactemail";
-    childEmail.textContent = "email: " + contacts.email;
-    let childPhone = document.createElement("div");
-    childPhone.className = "contactphone";
-    childPhone.textContent = "phone: " + contacts.phone;
-    let childAddress = document.createElement("div");
-    childAddress.className = "contactaddress";
-    childAddress.textContent = "address: " + contacts.address;
-    let buttons = document.createElement("div")
-    buttons.className = "buttons"
-    let childEditButton = document.createElement("button");
-    childEditButton.className = "button edit";
-    childEditButton.textContent = "Edit";
-    let childCloseButton = document.createElement("button");
-    childCloseButton.className = "button close";
-    childCloseButton.textContent = "Close";
+function renderView(contact) {
+  let main = document.querySelectorAll(".main")
 
-    //append all children into their respective spots and ultimately into the child
-    childName.appendChild(pic)
-    child.appendChild(childName)
-    child.appendChild(childEmail)
-    child.appendChild(childPhone)
-    child.appendChild(childAddress)
-    buttons.append(childEditButton)
-    buttons.appendChild(childCloseButton)
-    child.appendChild(buttons)
-    //append the final version of the child to the parent
-    parent.appendChild(child);
+  let contactInfo = document.createElement("div");
+  contactInfo.classList.add("contactinfo");
+
+  let contactName = document.createElement("div");
+  contactName.classList.add("contactname");
+  contactName.append(contact.name);
+
+  let profilePic = document.createElement("img");
+  profilePic.classList.add("profilepic")
+  profilePic.src = "./img/profile.jpg";
+  profilePic.alt = "Profile picture";
+  contactName.appendChild(profilePic)
+
+  let contactEmail = document.createElement("div");
+  contactEmail.classList.add("contactemail");
+  contactEmail.append(`email: ${contact.email}`);
+
+  let contactPhone = document.createElement("div");
+  contactPhone.classList.add("contactphone");
+  contactPhone.append(`cell: ${contact.phone}`);
+
+  let contactAddress = document.createElement("div");
+  contactAddress.classList.add("contactaddress");
+  contactAddress.append(`address: ${contact.address}`);
+
+  let button = document.createElement("div");
+  button.classList.add("buttons")
+
+  let buttonEdit = document.createElement("button");
+  buttonEdit.classList.add("button");
+  buttonEdit.classList.add("edit")
+  buttonEdit.value = "Edit"
+  buttonEdit.append("Edit")
+  button.appendChild(buttonEdit);
+
+  buttonEdit.addEventListener("click", event => {
+      console.log("bruh")
+  })
+
+  let buttonClose = document.createElement("button");
+  buttonClose.classList.add("button");
+  buttonClose.classList.add("close")
+  buttonClose.value = "Close";
+  buttonClose.append("Close")
+  button.appendChild(buttonClose)
+
+  buttonClose.addEventListener("click", event => {
+      cleanUpView();
+      renderIndex(contactList);
+  })
+
+  contactInfo.appendChild(contactName);
+  contactInfo.appendChild(contactEmail);
+  contactInfo.appendChild(contactPhone);
+  contactInfo.appendChild(contactAddress);
+  contactInfo.appendChild(button);
+
+  main[0].appendChild(contactInfo)
 }
 
 function cleanUpCreate() {
-    let nodes = document.querySelectorAll(".contactedit");
-    //remove all unique elements with class "contactedit"
-    for (let i = 0; i < nodes.length; i++) {
-        nodes[i].remove()
-    }
+  let nodes = document.querySelectorAll(".contactedit")
+
+  nodes[0].remove()
 }
 
-function renderCreate(contact){
-    let parent = document.querySelector(".main");
-    let child = document.createElement("div");
-    child.className = "contactedit";
-    let contactImg = document.createElement("div");
-    contactImg.className = "contactimg";
-    let pic = document.createElement("img");
-    pic.src="./img/profile.jpg";
-    pic.className = "profilepic";
-    pic.alt = "Profile Picture";
-    let formDiv = document.createElement("div");
-    formDiv.className = "form";
-    let form = document.createElement("form");
+function renderCreate() {
+  let main = document.querySelectorAll(".main")
 
-    //form for contact name
-    let contactName = document.createElement("div");
-    contactName.className = "inputcontainer";
-    let inputContactName = document.createElement("input");
-    inputContactName.setAttribute("type", "text");
-    inputContactName.setAttribute("id", "contactname");
-    inputContactName.setAttribute("name", "contactname");
-    inputContactName.setAttribute("placeholder", "Contact Name");
-    let contactNameButton = document.createElement("button");
-    contactNameButton.setAttribute("class", "extrafield");
-    contactNameButton.setAttribute("id", "extranamefield");
-    contactNameButton.setAttribute("name", "extranamefield");
-    contactNameButton.textContent = "+";
-    
-    //form for contact phone
-    let contactPhone = document.createElement("div");
-    contactPhone.className = "inputcontainer";
-    let inputContactPhone = document.createElement("input");
-    inputContactPhone.setAttribute("type", "tel");
-    inputContactPhone.setAttribute("name", "contactphone");
-    inputContactPhone.setAttribute("placeholder", "Contact Phone");
-    inputContactPhone.setAttribute("id", "contactphone");
-    let contactPhoneButton = document.createElement("button");
-    contactPhoneButton.setAttribute("class", "extrafield");
-    contactPhoneButton.setAttribute("id", "extraphonefield");
-    contactPhoneButton.setAttribute("name", "extraphonefield");
-    contactPhoneButton.textContent = "+";
+  let contactEdit = document.createElement("div");
+  contactEdit.classList.add("contactedit")
 
-    //form for contact address
-    let contactAddress = document.createElement("div");
-    contactAddress.className = "inputcontainer";
-    let inputContactAddress = document.createElement("input");
-    inputContactAddress.setAttribute("type", "text");
-    inputContactAddress.setAttribute("name", "contactaddress");
-    inputContactAddress.setAttribute("placeholder", "Contact Address");
-    inputContactAddress.setAttribute("id", "contactaddress");
-    let contactAddressButton = document.createElement("button");
-    contactAddressButton.setAttribute("class", "extrafield");
-    contactAddressButton.setAttribute("id", "extraaddressfield");
-    contactAddressButton.setAttribute("name", "extraaddressfield");
-    contactAddressButton.textContent = "+";
+  let contactImage = document.createElement("div");
+  contactImage.classList.add("contactimg")
 
-    //form for contact email
-    let contactEmail = document.createElement("div");
-    contactEmail.className = "inputcontainer";
-    let inputContactEmail = document.createElement("input");
-    inputContactEmail.setAttribute("type", "email");
-    inputContactEmail.setAttribute("name", "contactemail");
-    inputContactEmail.setAttribute("placeholder", "Contact Email");
-    inputContactEmail.setAttribute("id", "contactemail");
-    let contactEmailButton = document.createElement("button");
-    contactEmailButton.setAttribute("class", "extrafield");
-    contactEmailButton.setAttribute("id", "extraemailfield");
-    contactEmailButton.setAttribute("name", "extraemailfield");
-    contactEmailButton.textContent = "+";
+  let profilePic = document.createElement("img");
+  profilePic.classList.add("profilepic");
+  profilePic.src = "./img/profile.jpg";
+  profilePic.alt = "Profile picture";
+  contactImage.appendChild(profilePic);
 
-    //submit and cancel buttons
-    let buttons = document.createElement("div");
-    buttons.className = "buttons";
-    let submitButton = document.createElement("button");
-    submitButton.setAttribute("type", "submit");
-    submitButton.setAttribute("class", "button save");
-    submitButton.setAttribute("id", "savecontact");
-    submitButton.setAttribute("name", "savecontact");
-    submitButton.textContent = "Save Contact";
-    let resetButton = document.createElement("button");
-    resetButton.setAttribute("type", "reset");
-    resetButton.setAttribute("class", "button cancel");
-    resetButton.setAttribute("id", "cancel");
-    resetButton.setAttribute("name", "cancel");
-    resetButton.textContent = "Cancel";
+  let form = document.createElement("form");
 
-    contactImg.appendChild(pic)
-    child.appendChild(contactImg)
-    contactName.appendChild(inputContactName)
-    contactName.appendChild(contactNameButton)
-    contactPhone.appendChild(inputContactPhone)
-    contactPhone.appendChild(contactPhoneButton)
-    contactAddress.appendChild(inputContactAddress)
-    contactAddress.appendChild(contactAddressButton)
-    contactEmail.appendChild(inputContactEmail)
-    contactEmail.appendChild(contactEmailButton)
-    buttons.appendChild(submitButton)
-    buttons.appendChild(resetButton)
+  let inputContainer1 = document.createElement("div");
+  inputContainer1.classList.add("inputcontainer");
+  form.appendChild(inputContainer1)
 
-    form.appendChild(contactName)
-    form.appendChild(contactPhone)
-    form.appendChild(contactAddress)
-    form.appendChild(contactEmail)
-    form.appendChild(buttons)
-    formDiv.appendChild(form)
-    child.appendChild(formDiv)
+  let contactName = document.createElement("input")
+  contactName.type = "text";
+  contactName.id = "contactname";
+  contactName.name = "contactname";
+  contactName.placeholder = "Contact Name";
+  // contactName.value = contact.name;
+  inputContainer1.appendChild(contactName);
 
-    parent.appendChild(child)
+  let extrafield1 = document.createElement("button")
+  extrafield1.classList.add("extrafield");
+  extrafield1.id = "extranamefield";
+  extrafield1.name = "extranamefield";
+  extrafield1.append("+");
+  inputContainer1.appendChild(extrafield1);
+
+  let inputContainer2 = document.createElement("div");
+  inputContainer2.classList.add("inputcontainer");
+  form.appendChild(inputContainer2);
+
+  let contactPhone = document.createElement("input");
+  contactPhone.type = "tel";
+  contactPhone.id = "contactphone";
+  contactPhone.name = "contactphone";
+  contactPhone.placeholder ="Contact Phone";
+  // contactPhone.value = contact.phone;
+  inputContainer2.appendChild(contactPhone);
+
+  let extrafield2 = document.createElement("button")
+  extrafield2.classList.add("extrafield");
+  extrafield2.id = "extraphonefield";
+  extrafield2.name = "extraphonefield";
+  extrafield2.append("+");
+  inputContainer2.appendChild(extrafield2);
+
+
+  let inputContainer3 = document.createElement("div");
+  inputContainer3.classList.add("inputcontainer");
+  form.appendChild(inputContainer3);
+
+  let contactAddress = document.createElement("input");
+  contactAddress.type = "text";
+  contactAddress.id = "contactaddress";
+  contactAddress.name = "contactaddress";
+  contactAddress.placeholder = "Contact Address";
+  // contactAddress.value = contact.address;
+  inputContainer3.appendChild(contactAddress);
+
+  let extrafield3 = document.createElement("button");
+  extrafield3.classList.add("extrafield");
+  extrafield3.id = "extraaddressfield";
+  extrafield3.name = "extraaddressfield";
+  extrafield3.append("+");
+  inputContainer3.appendChild(extrafield3);
+
+  let inputContainer4 = document.createElement("div");
+  inputContainer4.classList.add("inputcontainer");
+  form.appendChild(inputContainer4);
+
+  let contactEmail = document.createElement("input")
+  contactEmail.type = "email";
+  contactEmail.id = "contactemail";
+  contactEmail.name = "contactemail";
+  contactEmail.placeholder = "Contact Email";
+  // contactEmail.value = contact.email;
+  inputContainer4.appendChild(contactEmail);
+
+  let extrafield4 = document.createElement("button");
+  extrafield4.classList.add("extrafield");
+  extrafield4.id = "extraemailfield";
+  extrafield4.name = "extraemailfield";
+  extrafield4.append("+");
+  inputContainer4.appendChild(extrafield4);
+
+  let buttons = document.createElement("div");
+  buttons.classList.add("buttons");
+  form.appendChild(buttons);
+
+  let buttonSave = document.createElement("button");
+  buttonSave.classList.add("button");
+  buttonSave.classList.add("save")
+  buttonSave.type = "submit";
+  buttonSave.id = "savecontact";
+  buttonSave.name = "savecontact";
+  buttonSave.append("Save Contact");
+  buttons.appendChild(buttonSave);
+
+  buttonSave.addEventListener("click", event => {
+      event.preventDefault();
+      let contactForm = document.querySelector("form");
+      let contactObjectName = contactForm.elements["contactname"];
+      let contactObjectPhone = contactForm.elements["contactphone"];
+      let contactObjectAddress = contactForm.elements["contactaddress"];
+      let contactObjectEmail = contactForm.elements["contactemail"];
+      let contactObject = {
+          name: contactObjectName.value,
+          phone: contactObjectPhone.value,
+          address: contactObjectAddress.value,
+          email: contactObjectEmail.value
+      }
+      contactList.push(contactObject);
+      cleanUpCreate();
+      renderView(contactObject);
+  })
+
+  let buttonCancel = document.createElement("button");
+  buttonCancel.type = "reset";
+  buttonCancel.classList.add("button");
+  buttonCancel.classList.add("cancel")
+  buttonCancel.id = "cancel";
+  buttonCancel.name = "cancel"
+  buttonCancel.value = "Close";
+  buttonCancel.append("Cancel");
+  buttons.appendChild(buttonCancel);
+
+  buttonCancel.addEventListener("click", event => {
+      event.preventDefault();
+      cleanUpCreate();
+      renderIndex(contactList);
+  })
+
+  contactEdit.appendChild(contactImage);
+  let formDiv = document.createElement("div")
+  formDiv.classList.add("form")
+  formDiv.appendChild(form)
+  contactEdit.appendChild(formDiv);
+
+  main[0].appendChild(contactEdit);
 }
+
+let homeButton = document.querySelector("#contactshome");
+let newContactButton = document.querySelector("#newcontact")
+
+homeButton.addEventListener("click", event => {
+  event.preventDefault();
+  let create = document.querySelectorAll(".contactedit")
+  let view = document.querySelectorAll(".contactinfo")
+  let index = document.querySelectorAll(".contact")
+  if (create.length != 0) {
+      cleanUpCreate();
+  } else if (view.length != 0) {
+      cleanUpView();
+  } else if (index.length != 0) {
+      cleanUpIndex();
+  }
+
+  renderIndex(contactList)
+})
+
+newContactButton.addEventListener("click", event => {
+  event.preventDefault();
+  let create = document.querySelectorAll(".contactedit")
+  let view = document.querySelectorAll(".contactinfo")
+  let index = document.querySelectorAll(".contact")
+  if (create.length != 0) {
+      cleanUpCreate();
+  } else if (view.length != 0) {
+      cleanUpView();
+  } else if (index.length != 0) {
+      cleanUpIndex();
+  }
+
+  renderCreate();
+})
+
+renderIndex(contactList)
